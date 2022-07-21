@@ -1,0 +1,461 @@
+/*============================================================================
+* 2013-2018 Vinovathemes
+* @author    Vinovathemes <vinovathemes@gmail.com>
+* @copyright 2013-2018 Vinovathemes SA
+==============================================================================*/
+/*============================================================================
+  #Normalize
+  Based on normalize.css v3.0.2 | MIT License | git.io/normalize
+==============================================================================*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+body,
+input,
+textarea,
+button,
+select {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  background-color: transparent;
+}
+p {
+  margin-bottom: 0;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+input:focus {
+  outline: none !important;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  max-width: 100%;
+  border: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+button,
+html input {
+  &[disabled] {
+    cursor: default;
+  }
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+input {
+  &[type="search"],
+  &[type="number"],
+  &[type="email"],
+  &[type="password"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+  }
+}
+dl, ol, ul {
+  margin-bottom: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+textarea {
+  overflow: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+// hide outline on focus for elements which are given focus by JS
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+/*============================================================================
+  Fast Tap
+  enables no-delay taps (FastClick-esque) on supporting browsers
+==============================================================================*/
+a,
+button,
+[role="button"],
+input,
+label,
+select,
+textarea {
+  touch-action: manipulation;
+}
+{% if settings.enable_rtl == true %}
+  $padding_left: padding-right;
+  $padding_right: padding-left;
+  $margin_left: margin-right;
+  $margin_right: margin-left;
+{% else %}
+  $padding_left: padding-left;
+  $padding_right: padding-right;
+  $margin_left: margin-left;
+  $margin_right: margin-right;
+{% endif %}
+
+.ml-auto {
+  #{$margin_left}: auto !important;
+}
+.mr-auto {
+  #{$margin_right}: auto !important;
+}
+
+@for $i from 0 through 50 {
+  $value: 5 * $i;
+  .mt-#{$value} {
+      margin-top: #{$value}px !important;
+  }
+  .mb-#{$value} {
+      margin-bottom: #{$value}px !important;
+  }
+}
+
+@for $i from 0 through 50 {
+  $value: 5 * $i;
+  .pt-#{$value} {
+      padding-top: #{$value}px !important;
+  }
+  .pb-#{$value} {
+      padding-bottom: #{$value}px !important;
+  }
+}
+
+@for $i from 0 through 50 {
+  $value: 5 * $i;
+  .pl-#{$value} {
+    #{$padding_left}: #{$value}px !important;
+  }
+  .pr-#{$value} {
+    #{$padding_right}: #{$value}px !important;
+  }
+}
+
+@for $i from 0 through 50 {
+  $value: 5 * $i;
+  .ml-#{$value} {
+    #{$margin_left}: #{$value}px !important;
+  }
+  .mr-#{$value} {
+    #{$margin_right}: #{$value}px !important;
+  }
+}
+@media (max-width: 1199px) {
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .mt-lg-#{$value} {
+        margin-top: #{$value}px !important;
+    }
+    .mb-lg-#{$value} {
+        margin-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pt-lg-#{$value} {
+        padding-top: #{$value}px !important;
+    }
+    .pb-lg-#{$value} {
+        padding-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pl-lg-#{$value} {
+      #{$padding_left}: #{$value}px !important;
+    }
+    .pr-lg-#{$value} {
+      #{$padding_right}: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .ml-lg-#{$value} {
+      #{$margin_left}: #{$value}px !important;
+    }
+    .mr-lg-#{$value} {
+      #{$margin_right}: #{$value}px !important;
+    }
+  }
+}
+@media (max-width: 991px) {
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .mt-md-#{$value} {
+        margin-top: #{$value}px !important;
+    }
+    .mb-md-#{$value} {
+        margin-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pt-md-#{$value} {
+        padding-top: #{$value}px !important;
+    }
+    .pb-md-#{$value} {
+        padding-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pl-md-#{$value} {
+      #{$padding_left}: #{$value}px !important;
+    }
+    .pr-md-#{$value} {
+      #{$padding_right}: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .ml-md-#{$value} {
+      #{$margin_left}: #{$value}px !important;
+    }
+    .mr-md-#{$value} {
+      #{$margin_right}: #{$value}px !important;
+    }
+  }
+}
+@media (max-width: 767px) {
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .mt-xs-#{$value} {
+      margin-top: #{$value}px !important;
+    }
+    .mb-xs-#{$value} {
+      margin-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pt-xs-#{$value} {
+        padding-top: #{$value}px !important;
+    }
+    .pb-xs-#{$value} {
+        padding-bottom: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .pl-xs-#{$value} {
+      #{$padding_left}: #{$value}px !important;
+    }
+    .pr-xs-#{$value} {
+      #{$padding_right}: #{$value}px !important;
+    }
+  }
+
+  @for $i from 0 through 50 {
+    $value: 5 * $i;
+    .ml-xs-#{$value} {
+      #{$margin_left}: #{$value}px !important;
+    }
+    .mr-xs-#{$value} {
+      #{$margin-right}: #{$value}px !important;
+    }
+  }
+}
+@for $i from 0 through 100 {
+  $value: $i;
+  .row.spacing-#{$value}{
+    margin-right:#{-$value/2}px;
+    margin-left: #{-$value/2}px;
+
+    >[class^="col-"], > [class*=" col-"]{
+      padding-left: #{$value/2}px!important;
+      padding-right: #{$value/2}px!important;
+    }
+  }
+}
+
+.flex-last {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 1;
+  -ms-flex-order: 1;
+  order: 1;
+}
+
+.hidden {
+  display: none;
+}
+.hide {
+  display: none;
+}
+
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 26px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 6px;
+  background: #c7c7c7;
+  animation: lds-facebook 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 0px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 10px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 20px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 2px;
+    height: 10px;
+  }
+  50%, 100% {
+    top: 6px;
+    height: 20px;
+  }
+}
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 26px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 6px;
+  background: #c7c7c7;
+  animation: lds-facebook 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 0px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 10px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 20px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 2px;
+    height: 10px;
+  }
+  50%, 100% {
+    top: 6px;
+    height: 20px;
+  }
+}
+img.lazyload {
+  background-color: #f5f5f5;
+  background-image: url({{ 'pulse.svg' | asset_url }});
+  background-position: center;
+  background-repeat: no-repeat;
+}

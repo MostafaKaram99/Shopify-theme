@@ -1,0 +1,128 @@
+{% if collection.image != blank %}
+  {%- assign collection_image = collection.image -%}
+{% endif %}
+<div class="right_sidebar">
+  {% if settings.breadcrumbs_enable %}
+    <section id="NovBreadcrumbs" style="background-image: url('{{ collection_image | img_url: '1920x1920' }}')">
+      <div class="container">
+        {% if custom_pagetitle == blank %}
+          <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ page_title }}</h1>
+        {% else %}
+          <h1 class="headingPage d-flex {{ settings.title_alignment }}">{{ custom_pagetitle }}</h1>
+        {% endif %}
+        <ol class="breadcrumb {{ settings.title_alignment }} list-inline" itemscope itemtype="http://schema.org/BreadcrumbList">
+          <li class="list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+            <a href="/" title="{{ 'general.breadcrumbs.home' | t }}" itemprop="item">
+              <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          {% if template contains 'collection' and collection.handle %}
+            {% if current_tags %}
+              {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+              <li class="list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
+                  <span itemprop="name">{{ collection.title }}</span>
+                </a>
+                <meta itemprop="position" content="2" />
+              </li>
+              <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <span itemprop="item"><span itemprop="name">{{ current_tags | join: " + " }}</span></span>
+                <meta itemprop="position" content="3" />
+              </li>
+            {% else %}
+              <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <span itemprop="item"><span itemprop="name">{{ collection.title }}</span></span>
+                <meta itemprop="position" content="2" />
+              </li>
+            {% endif %}
+          {% elsif template contains 'page' %}
+            <li class="active list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              <span itemprop="item"><span itemprop="name">{{ page.title }}</span></span>
+              <meta itemprop="position" content="2" />
+            </li>
+          {% else %}
+            <li class="active list-inline-item list-inline-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              {% if custom_pagetitle != blank %}
+                <span itemprop="item"><span itemprop="name">{{ custom_pagetitle }}</span></span>
+              {% else %}
+                <span itemprop="item"><span itemprop="name">{{ page_title }}</span></span>
+              {% endif %}
+              <meta itemprop="position" content="2" />
+            </li>
+          {% endif %}
+        </ol>
+      </div>
+    </section>
+  {% endif %}
+  <div class="page-width">
+    <div class="container_90">
+      <div class="collection_right">
+        <div class="container_1320">
+          <div class="row flex-row-reverse">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 order-md-0 order-sm-1 order-xs-1">
+              <div class="sortPagiBar d-md-flex align-items-center">
+                <div class="filters-toolbar__item d-flex align-items-center">
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" value="a" aria-expanded="true">
+                    {{ 'collections.sorting.title' | t }}
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right text-right">
+                    <div class="dropdown-item{% if sort_by == "best-selling" %} active{% endif %}" data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "title-ascending" %} active{% endif %}" data-value="title-ascending">{{ 'collections.sorting.az' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "title-descending" %} active{% endif %}" data-value="title-descending">{{ 'collections.sorting.za' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "price-ascending" %} active{% endif %}" data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "price-descending" %} active{% endif %}" data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "created-descending" %} active{% endif %}" data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</div>
+                    <div class="dropdown-item{% if sort_by == "created-ascending" %} active{% endif %}" data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</div>
+                  </div>
+                  <input id="SortBy" class="collection-header__default-sort" type="hidden" value="{{ collection.default_sort_by }}">
+                  <div class="gridlist-toggle">
+                    <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+                    <a href="#" id="grid-3" title="Grid View 3" data-type="view_3"><i class="zmdi zmdi-view-week"></i></a>
+                    <a href="#" id="grid-2" title="Grid View 2" data-type="view_2" class="active"><i class="zmdi zmdi-pause"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sidebar sidebar-collection col-lg-3 col-md-4 col-sm-12 col-xs-12 order-md-0 order-sm-0 order-xs-0">
+              {% section 'nov-sidebar' %}
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12 order-md-0 order-sm-2 order-xs-2">
+              {% section 'collection-template' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  {% if settings.overlay_opacity == true %}
+    #NovBreadcrumbs::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      background: rgba(0, 0, 0, {{ settings.image_overlay_opacity }}%);
+    }
+  {% endif %}
+  #NovBreadcrumbs {
+    padding-top: {{ settings.distance_top }};
+    padding-bottom: {{ settings.distance_bottom }};
+    {% if settings.background_color != blank %}
+      background-color: {{ settings.background_color }};
+    {% endif %}
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  #NovBreadcrumbs .breadcrumb .list-inline-item a span, #NovBreadcrumbs .breadcrumb .list-inline-item span, #NovBreadcrumbs .headingPage {
+    color: {{ settings.color_text_head }};
+  }
+  #NovBreadcrumbs .breadcrumb .list-inline-item a:hover span {
+    color: {{ settings.color_text_head_hover }};
+  }
+</style>

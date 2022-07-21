@@ -1,0 +1,147 @@
+{%- assign bg_image = section.settings.background_image -%}
+{% if section.settings.background_color != blank or bg_image.src != blank %}
+  <style>
+    .section-newsletter {
+      {% if section.settings.background_color != blank %}background-color: {{ section.settings.background_color }};{% endif %}
+      {% if bg_image.src != blank %}background-image: url("{{ bg_image | img_url: '1920x1920' }}");background-position: center;background-repeat: no-repeat;margin-bottom: 72px;{% endif %}
+    }
+  </style>
+{% endif %}
+<div class="distance" style="padding-top: {{ section.settings.distance_top }}; padding-bottom: {{ section.settings.distance_bottom }}">
+  <div class="page-width">
+    {% if section.settings.full_width == false %}
+    <div class="container">
+    {% endif %}
+      <div class="section-header">
+        {% if section.settings.icon_newsletter != blank %}
+          <div class="image_newletter">
+            <img class="lazyload" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="{{ section.settings.icon_newsletter | img_url: '100x' }}" alt="Icon Newsletter">
+          </div>
+        {% endif %}
+        <div class="block_title {{ section.settings.title_alignment }}" >
+          {% if section.settings.section_title != blank %}
+            <div class="title-block" style="font-family:{{settings.type_header_family}}; color: {{ settings.heading_text }};"><span>{{ section.settings.section_title | escape }}</span></div>
+          {% endif %}
+          {% if section.settings.subheading != blank %}
+            <span class="sub_title" style="font-family:{{settings.type_base_family}}; color: {{ settings.sub_heading_text }};">{{ section.settings.subheading | escape }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% form 'customer' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+          <p class="form--success text-center" style="color: #fff;">{{ 'general.newsletter_form.confirmation' | t }}</p>
+        {% else %}
+          <div class="password__input-group">
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email"
+              name="contact[email]"
+              id="Email_newsletter"
+              class="input-group__field newsletter__input"
+              value="{% if customer %}{{ customer.email }}{% endif %}"
+              placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+            <span class="input-group__btn">
+              <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe_newsletter">
+                <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+              </button>
+            </span>
+          </div>
+        {% endif %}
+      {% endform %}
+    {% if section.settings.full_width == false %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Vinova Newsletter",
+    "class": "index-section section-newsletter",
+    "settings": [
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Heading",
+        "default": "Subscribe to our newsletter"
+      },
+      {
+        "type": "color",
+        "id": "color_title",
+        "label": "Color"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "A short sentence describing what someone will receive by subscribing"
+      },
+      {
+        "type": "color",
+        "id": "color_subheading",
+        "label": "Color"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon_newsletter",
+        "label": "Icon Newsletter"
+      },
+      {
+        "type": "paragraph",
+        "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top Distance Section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom Distance Section",
+        "default": "30px"
+      }
+    ],
+    "presets": [{
+      "name": "Vinova Newsletter",
+      "category": "Promotional"
+    }]
+  }
+{% endschema %}

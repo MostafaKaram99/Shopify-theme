@@ -1,0 +1,107 @@
+{%- assign new_comment = false -%}
+{% if comment and comment.created_at %}
+  {%- assign new_comment = true -%}
+  {%- assign new_comment_id = comment.id -%}
+{% endif %}
+
+{% if new_comment %}
+  {%- assign duplicate_comment = false %}
+  {% for comment in article.comments %}
+    {% if comment.id == new_comment_id %}
+      {%- assign duplicate_comment = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if duplicate_comment %}
+    {%- assign number_of_comments = article.comments_count -%}
+  {% else %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+  {% endif %}
+{% else %}
+  {%- assign number_of_comments = article.comments_count -%}
+{% endif %}
+
+{% include 'nov-breadcrumb' %}
+
+<article class="page-width nov-blog mt-150 mt-xs-70 left_sidebar" itemscope itemtype="http://schema.org/Article">
+  <div class="container_1320">
+    <div class="row spacing-60">
+      <div class="sidebar sidebar-article col-lg-3 col-md-4">
+        {% section 'nov-sidebar-article' %}
+      </div>
+      <div class="col-lg-9 col-md-8 blog_detail mt-xs-30">
+        {% section 'article-template' %}
+
+        {% include 'nov-blog-related' %}
+
+        {% if blog.comments_enabled? %}
+          {% if number_of_comments > 0 %}
+          <div class="article__comments">
+            <div class="title-block text-uppercase text-center">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</div>
+            {% paginate article.comments by 5 %}
+              <div id="comments">
+                {% if new_comment %}
+                  <p class="note form-success">
+                    {% if blog.moderated? %}
+                      {{ 'blogs.comments.success_moderated' | t }}
+                    {% else %}
+                      {{ 'blogs.comments.success' | t }}
+                    {% endif %}
+                  </p>
+                {% endif %}
+                <ul class="comments">
+                  {% if new_comment %}
+                    <li id="{{ comment.id }}" class="comment">
+                      {% include 'comment' %}
+                    </li>
+                  {% endif %}
+                  {% for comment in article.comments %}
+                    {% unless comment.id == new_comment_id %}
+                      <li id="{{ comment.id }}" class="comment">
+                        {% include 'comment' %}
+                      </li>
+                    {% endunless %}
+                  {% endfor %}
+                </ul>
+                {% if paginate.pages > 1 %}
+                  {% include 'pagination' %}
+                {% endif %}
+              </div>
+            {% endpaginate %}
+          </div>
+          {% endif %}
+          <div>
+            <div class="comment-form form-vertical">
+              {% form 'new_comment', article %}
+                <div class="title_block mb-60">{{ 'blogs.comments.title' | t }}</div>
+                {{ form.errors | default_errors }}
+                <div>
+                  <div class="row">
+                    <div class="col col-xs-12">
+                      <input type="text" name="comment[author]" id="CommentAuthor" placeholder="{{ 'blogs.comments.name' | t }} (*)" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}" required>
+                    </div>
+                    <div class="col col-xs-12">
+                      <input type="email" name="comment[email]" id="CommentEmail" placeholder="{{ 'blogs.comments.email' | t }} (*)" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" required>
+                    </div>
+                    <div class="col col-xs-12">
+                      <input type="tel" name="comment[phone]" id="CommentPhone" placeholder="{{ 'blogs.comments.phone' | t }} (*)" class="input-full{% if form.errors contains 'phone' %} input--error{% endif %}" value="{{ form.phone }}">
+                    </div>
+                  </div>
+                  <div>
+                    <textarea rows="10" cols="50" name="comment[body]" id="CommentBody" placeholder="{{ 'blogs.comments.message' | t }}" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}" required>{{ form.body }}</textarea>
+                  </div>
+                </div>
+                <button type="submit" value="Submit" class="hover_x btn btn-send" >
+                  <span>{{ 'blogs.comments.post' | t }}</span>
+                  <i class="zmdi zmdi-long-arrow-right"></i>
+                </button>
+              {% endform %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>
+

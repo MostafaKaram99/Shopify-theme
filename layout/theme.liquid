@@ -1,0 +1,258 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}">Home 1<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="no-js{% if settings.enable_rtl == true %} lang-rtl{% endif %}" lang="{{ shop.locale }}"{% if settings.enable_rtl == true %} dir="rtl"{% endif %}>
+<!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="theme-color" content="{{ settings.color_button }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    {% if settings.favicon != blank %}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {% endif %}
+
+    {% style %} 
+   
+    {% endstyle %}
+    {% capture seo_title %}
+      {{ page_title }}
+      {% if current_tags %}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {% endif %}
+      {% if current_page != 1 %}
+        &ndash; {{ 'general.meta.page' | t: page: current_page }}
+      {% endif %}
+      {% unless page_title contains shop.name %}
+        &ndash; {{ shop.name }}
+      {% endunless %}
+    {% endcapture %}
+    <title>{{ seo_title }}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    {% include 'social-meta-tags' %}
+    {% include 'google-fonts' %}
+    {% include 'icon-fonts' %}
+    {% include 'nov-head-css' %}
+    {% include 'nov-head-js' %}
+  {{ content_for_header }}
+  {% include "ot-cookies" %}</head>
+  <body class="template-{{ template | split: '.' | first }}">
+    <div class="nov__load">
+      <div class="nov__loads">
+        <div class="nov__loadss"></div>
+      </div>
+    </div>
+    <div class="overflow-hidden">
+      {% if template.name != "index" %} 
+        <div class="preloader_nov">
+          <div class="preloader-nov">
+            <div class="nov_load"></div>
+          </div>
+        </div>
+      {% endif %}
+      <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+      {% if settings.mini_cart_type == 'canvas' %}
+      <div class="cart_canvas_content">
+        <div id="_desktop_cart">
+          <div class="close_cart d-md-flex d-none align-items-center justify-content-center"><i class="zmdi zmdi-close"></i></div>
+          <div id="cart-info"></div>
+        </div>
+      </div>
+      {% endif %}
+      {% section 'nov-header' %}
+      <main class="main-content" id="MainContent">
+        <section class="page-container" id="PageContainer">
+          {{ content_for_layout }}
+        </section>
+      </main>
+      {% section 'nov-footer' %}
+    </div>
+    <div class="canvas-menu drawer-left">
+      <div class="canvas-header-box d-flex justify-content-center align-items-center">
+        <div class="close-box"><i class="zmdi zmdi-close"></i></div>
+      </div>
+    </div>
+    <div class="canvas-overlay"></div>
+
+    <div class="sidebar-overlay"></div>
+    {% include 'nov-formsearch' %}
+    {% include 'nov-search-autocomplete' %}
+    
+    {% include 'nov-stickymenu-mobile' %}
+    
+    {% include 'nov-popup-newsletter' %}
+    
+    {% if settings.wishlist_enable %}
+      {% include 'nov-popup-wishlist' %}
+    {% endif %}
+
+    <div id="_desktop_back_top">
+      <div id="back-top">
+        <span>
+          <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="link_to_collection_cart_empty d-none">
+      <ul class="list-unstyled">
+        {% if settings.collec_1_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_1 }}"><span>{{ settings.collec_1_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_2_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_2 }}"><span>{{ settings.collec_2_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_3_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_3 }}"><span>{{ settings.collec_3_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_4_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_4 }}"><span>{{ settings.collec_4_name }}</span></a></li>
+        {% endif %}
+        {% if settings.collec_5_name != blank %}
+          <li class="mb-10"><a class="btn" href="{{ settings.collec_5 }}"><span>{{ settings.collec_5_name }}</span></a></li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <div id="Form_newletter" class="form-vertical modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header position-initial">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="zmdi zmdi-hc-fw zmdi-close"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="block_title text-center">
+              <div class="title">{{ 'general.newsletter_form.title_popup_soldout' | t }}</div>
+              <div class="sub">{{ 'general.newsletter_form.sub_popup_soldout' | t }}</div>
+            </div>
+            {% form 'customer' %}
+              {{ form.errors | default_errors }}
+              {% if form.posted_successfully? %}
+                <p class="form--success text-center" style="color: #fff;">{{ 'general.newsletter_form.confirmation' | t }}</p>
+              {% else %}
+                <div class="input-group d-block">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email"
+                    name="contact[email]"
+                    id="Email_newsletter"
+                    class="input-group__field newsletter__input text-center"
+                    value="{% if customer %}{{ customer.email }}{% endif %}"
+                    placeholder="{{ 'general.newsletter_form.email_placeholder_soldout' | t }}">
+                  <button type="submit" class="btn newsletter__submit w-100" name="commit" id="Subscribe_newsletter">
+                    <span class="newsletter__submit d-flex align-items-center justify-content-center hover_x">
+                      <span>
+                        <i class="zmdi zmdi-email"></i>
+                        <span>{{ 'general.newsletter_form.noitify_me' | t }}</span>
+                      </span>
+                      <i class="zmdi zmdi-long-arrow-right"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="checkbox">
+                  <label id="myCheck" class="d-inline-flex">
+                    <span class="custom-checkbox">
+                      <input name="no-view" class="no-view" type="checkbox">
+                      <span class="ps-shown-by-js"><i class="zmdi zmdi-check"></i></span>
+                    </span>
+                    <span id="text">
+                      {{ 'general.newsletter_form.note' | t }}
+                      <a href="/pages/term-and-services">Terms of Service</a>
+                      and
+                      <a href="/pages/privacy-policy">Privacy Policy</a>
+                    </span>
+                  </label>
+                </div>
+                
+              {% endif %}
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="Size_chart" class="form-vertical modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header position-initial">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="zmdi zmdi-hc-fw zmdi-close"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="single__tabs">
+              <div class="block_nav d-flex align-items-center">
+                <ul class="nav nav-tabs">
+                  <li><a class="active" href="#womenTabs1" data-toggle="tab">{{ 'products.product.for_women' | t }}</a></li>
+                  <li><a href="#menTabs2" data-toggle="tab">{{ 'products.product.for_men' | t }}</a></li>
+                </ul>
+              </div>
+              <div class="tab-content">
+                <div class="tab-pane active" id="womenTabs1">
+                  <div class="block_img">
+                    <div class="respone_image" style="padding-top:{{ 1 | divided_by: settings.size_women.aspect_ratio | times: 100}}%;">
+                      {% assign img_url = settings.size_women | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                      <img class="row__image lazyload"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 14'%3E%3C/svg%3E"
+                        data-src="{{ img_url }}"
+                        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ settings.size_women.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ settings.size_women.alt | escape }}">
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="menTabs2">
+                  <div class="block_img">
+                    <div class="respone_image" style="padding-top:{{ 1 | divided_by: settings.size_men.aspect_ratio | times: 100}}%;">
+                      {% assign img_url = settings.size_men | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                      <img class="row__image lazyload"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 14'%3E%3C/svg%3E"
+                        data-src="{{ img_url }}"
+                        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ settings.size_men.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ settings.size_men.alt | escape }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'nov-currency' %}
+
+    <script>
+      jQuery(function() {
+        jQuery('.swatch :radio').change(function() {
+          var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+          var optionValue = jQuery(this).val();
+          jQuery(this)
+            .closest('form')
+            .find('.single-option-selector')
+            .eq(optionIndex)
+            .val(optionValue)
+            .trigger('change');
+          
+          jQuery(this).parents('.watch_availabel').find('span.variant_current').text(optionValue);
+        });
+      });
+    </script>
+
+    {{ 'nova.js' | asset_url | script_tag }}
+
+  </body>
+</html>

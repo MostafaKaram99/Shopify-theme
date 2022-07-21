@@ -1,0 +1,589 @@
+{% if section.settings.background_color != blank %}
+  <style>
+    #shopify-section-{{ section.id }}.section-lookbook {
+      background-color: {{ section.settings.background_color }};
+    }
+    #shopify-section-{{ section.id }} .nov-content-lookbook::before {
+      background: rgba(0, 0, 0, {{ section.settings.image_overlay_opacity }}%);
+    }
+  </style>
+{% endif %}
+<div class="distance" style="padding-top: {{ section.settings.distance_top }}; padding-bottom: {{ section.settings.distance_bottom }}">
+  <div class="page-width section-lookbook-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="nov-owl">
+    <div class="block" id="gallery">
+      {% if section.settings.has_fullwidth == false %}
+      <div class="container_90">
+      {% endif %}
+        <div class="block_title {{ section.settings.title_alignment }}">
+          {% if section.settings.title != blank %}
+            <div class="title_block" style="font-family:{{settings.type_header_family}}; {% if settings.heading_text != blank %}color: {{ settings.heading_text }};{% endif %}>{{ section.settings.title }}</div>
+          {% endif %}
+          {% if section.settings.subheading != blank %}
+            <div class="sub_title" style="font-family:{{settings.type_base_family}}; {% if settings.sub_heading_text != blank %}color: {{ settings.sub_heading_text }};{% endif %}{% if section.settings.size_sub != blank %}"{% endif %}">{{ section.settings.subheading }}</div>
+          {% endif %} 
+        </div> 
+        {% if section.blocks.size > 0 %}
+          <div class="nov-lookbook default {{ section.settings.class }}">
+            <div class="row spacing-{{ section.settings.spacing }}">
+              {% for block in section.blocks %}
+                <div class="item item-{{ forloop.index }} col-lg-3 col-md-6 col-sm-6 col-xs-12 text-center{% if block.settings.class != blank %} {{ block.settings.class }}{% endif %}">
+                  <div class="nov-content-lookbook" id="image-gallery">
+                    <div class="image">
+                      {% if block.settings.lookbook_image != blank %}
+                        <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.lookbook_image.aspect_ratio | times: 100}}%;">
+                          {% assign img_url = block.settings.lookbook_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                          <img class="_image_hover lazyload"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                            data-src="{{ img_url }}"
+                            data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                            data-aspectratio="{{ block.settings.lookbook_image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="">
+                        </div>
+                      {% else %}
+                        <img src="https://via.placeholder.com/415x415">
+                      {% endif %}
+                      {% if block.settings.lookbook_image != blank %}
+                        <div class="block_link" data-toggle="modal" data-target="#Modallook-{{forloop.index}}">
+                          <div class="cap_link hover_x" style="background: {{ block.settings.bg_title_link }}">
+                            <span>{{ block.settings.title_link }}</span>
+                            <i class="zmdi zmdi-long-arrow-right"></i>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
+                    <div class="modal fade" id="Modallook-{{forloop.index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <i class="zmdi zmdi-close"></i>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row align-items-center">
+                              <div class="image col-md-7 col-sm-12 col-xs-12">
+                                <div class="respone_image" style="padding-top:{{ 1 | divided_by: block.settings.lookbook_image.aspect_ratio | times: 100}}%;">
+                                  {% assign img_url = block.settings.lookbook_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                  <img class="lazyload"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                                    data-src="{{ img_url }}"
+                                    data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                    data-aspectratio="{{ block.settings.lookbook_image.aspect_ratio }}"
+                                    data-sizes="auto"
+                                    alt="{{ block.settings.lookbook_image.alt | escape }}">
+                                </div>
+                              </div>
+                              {% assign _product_1 = all_products[block.settings.pin_product_1] %}
+                              {% assign _product_2 = all_products[block.settings.pin_product_2] %}
+                              {% assign _product_3 = all_products[block.settings.pin_product_3] %}
+                              {% assign _product_4 = all_products[block.settings.pin_product_4] %}
+                              {% if _product_1 != blank %}
+                                <div class="items items_1" style="{{ block.settings.pin_position_1 }}">
+                                  <div class="item-lookbook">
+                                    <span class="number-lookbook"><i class="zmdi zmdi-plus"></i></span>
+                                    <div class="content-lookbook {{ block.settings.pin_content_position_1 }}">
+                                      <div class="item-thumb">
+                                        {% assign featured_image = _product_1.selected_or_first_available_variant.featured_image | default: _product_1.featured_image %}
+                                        <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}" >
+                                          <div class="respone_image" style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;">
+                                            {% assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                            <img class="lazyload"
+                                              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                                              data-src="{{ img_url }}"
+                                              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                              data-aspectratio="{{ featured_image.aspect_ratio }}"
+                                              data-sizes="auto"
+                                              alt="{{ featured_image.alt | escape }}">
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div class="content-lookbook-bottom mb-10">
+                                        <div class="item-title">
+                                          <a href="{{ _product_1.url | within: collection }}" alt="{{ _product_1.title }}">{{ _product_1.title }}</a>
+                                        </div>
+                                        <div class="price">
+                                          {{ _product_1.selected_or_first_available_variant.price | money }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                              {% if _product_2 != blank %}
+                                <div class="items items_2" style="{{ block.settings.pin_position_2 }}">
+                                  <div class="item-lookbook">
+                                    <span class="number-lookbook"><i class="zmdi zmdi-plus"></i></span>
+                                    <div class="content-lookbook {{ block.settings.pin_content_position_2 }}">
+                                      <div class="item-thumb">
+                                        {% assign featured_image = _product_2.selected_or_first_available_variant.featured_image | default: _product_2.featured_image %}
+                                        <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}" >
+                                          <div class="respone_image" style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;">
+                                            {% assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                            <img class="lazyload"
+                                              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                                              data-src="{{ img_url }}"
+                                              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                              data-aspectratio="{{ featured_image.aspect_ratio }}"
+                                              data-sizes="auto"
+                                              alt="{{ featured_image.alt | escape }}">
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div class="content-lookbook-bottom mb-10">
+                                        <div class="item-title">
+                                          <a href="{{ _product_2.url | within: collection }}" alt="{{ _product_2.title }}">{{ _product_2.title }}</a>
+                                        </div>
+                                        <div class="price">
+                                          {{ _product_2.selected_or_first_available_variant.price | money }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                              {% if _product_3 != blank %}
+                                <div class="items items_3" style="{{ block.settings.pin_position_3 }}">
+                                  <div class="item-lookbook">
+                                    <span class="number-lookbook"><i class="zmdi zmdi-plus"></i></span>
+                                    <div class="content-lookbook {{ block.settings.pin_content_position_3 }}">
+                                      <div class="item-thumb">
+                                        {% assign featured_image = _product_3.selected_or_first_available_variant.featured_image | default: _product_3.featured_image %}
+                                        <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}" >
+                                          <div class="respone_image" style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;">
+                                            {% assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                            <img class="lazyload"
+                                              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                                              data-src="{{ img_url }}"
+                                              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                              data-aspectratio="{{ featured_image.aspect_ratio }}"
+                                              data-sizes="auto"
+                                              alt="{{ featured_image.alt | escape }}">
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div class="content-lookbook-bottom mb-10">
+                                        <div class="item-title">
+                                          <a href="{{ _product_3.url | within: collection }}" alt="{{ _product_3.title }}">{{ _product_3.title }}</a>
+                                        </div>
+                                        <div class="price">
+                                          {{ _product_3.selected_or_first_available_variant.price | money }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                              {% if _product_4 != blank %}
+                                <div class="items items_4" style="{{ block.settings.pin_position_4 }}">
+                                  <div class="item-lookbook">
+                                    <span class="number-lookbook"><i class="zmdi zmdi-plus"></i></span>
+                                    <div class="content-lookbook {{ block.settings.pin_content_position_4 }}">
+                                      <div class="item-thumb">
+                                        {% assign featured_image = _product_4.selected_or_first_available_variant.featured_image | default: _product_4.featured_image %}
+                                        <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}" >
+                                          <div class="respone_image" style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;">
+                                            {% assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+                                            <img class="lazyload"
+                                              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3C/svg%3E"
+                                              data-src="{{ img_url }}"
+                                              data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                              data-aspectratio="{{ featured_image.aspect_ratio }}"
+                                              data-sizes="auto"
+                                              alt="{{ featured_image.alt | escape }}">
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div class="content-lookbook-bottom mb-10">
+                                        <div class="item-title">
+                                          <a href="{{ _product_4.url | within: collection }}" alt="{{ _product_4.title }}">{{ _product_4.title }}</a>
+                                        </div>
+                                        <div class="price">
+                                          {{ _product_4.selected_or_first_available_variant.price | money }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                              <div class="info-lookbooks col-md-5 col-sm-12 col-xs-12">
+                                {% if block.settings.lookbook_title != blank %}
+                                  <h2 class="title-lookbook">{{ block.settings.lookbook_title }}</h2>
+                                {% endif %}
+                                {% if block.settings.lookbook_desc != blank %}
+                                  <div class="description-lookbook">{{ block.settings.lookbook_desc }}</div>
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.blocks.size == 0 %}
+          {% include 'no-blocks' %}
+        {% endif %}
+      {% if section.settings.has_fullwidth == false %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Vinova LookBook",
+    "class": "index-section section-lookbook",
+    "max_blocks": 9,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "SHOP THE LOOKbook"
+      },
+      {
+        "type": "text",
+        "id": "size_title",
+        "label": "Size Title",
+        "default": "24px"
+      },
+      {
+        "type": "color",
+        "id": "color_title",
+        "label": "Color Title LookBook",
+        "default": "#222"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "SubHeading",
+        "default": "Our Lookbook 2017 . hand-picked arrivals from the best designer"
+      },
+      {
+        "type": "text",
+        "id": "size_sub",
+        "label": "Size Sub",
+        "default": "13px"
+      },
+      {
+        "type": "color",
+        "id": "color_sub",
+        "label": "Color SubHeading",
+        "default": "#6e6e6e"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type":  "header",
+        "content": "Option (Type Slider)"
+      },
+      {
+        "type": "range",
+        "id": "image_overlay_opacity",
+        "label": "Image Overlay Opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "default": 25
+      },
+      {
+        "type": "text",
+        "id": "show_number",
+        "label": "Show Number",
+        "default": "2"
+      },
+      {
+        "type": "range",
+        "id": "spacing",
+        "min": 5,
+        "max": 50,
+        "step": 5,
+        "label": "Spacing Item",
+        "default": 30,
+        "info": "Select number spacing for item slider"
+      },
+      {
+        "type": "range",
+        "id": "items_tablet",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Items Tablet",
+        "default": 3,
+        "info": "Select number Items Tablet for slider"
+      },
+      {
+        "type": "range",
+        "id": "items_mobile",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Items Mobile",
+        "default": 2,
+        "info": "Select number Items Mobile for slider"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_dots",
+        "label": "Show dots",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_nav",
+        "label": "Show Navigation",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto Play",
+        "default": false
+      },
+      {
+        "type":  "header",
+        "content": "Design Option"
+      },
+      {
+        "type": "text",
+        "id": "class",
+        "label": "Class"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background colors"
+      },
+      {
+        "type": "checkbox",
+        "id": "has_fullwidth",
+        "label": "Full Width",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "distance_top",
+        "label": "Top Distance Section",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "distance_bottom",
+        "label": "Bottom Distance Section",
+        "default": "30px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "lookbook",
+        "name": "Lookbook Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "lookbook_title",
+            "label": "Title",
+            "default": "Title"
+          },
+          {
+            "type": "text",
+            "id": "lookbook_desc",
+            "label": "Description",
+            "default": "Description"
+          },
+          {
+            "type": "text",
+            "id": "title_link",
+            "label": "Title Link",
+            "default": "Shop now"
+          },
+          {
+            "type": "color",
+            "id": "color_title_link",
+            "label": "Color Title Link",
+            "default": "#6e6e6e"
+          },
+          {
+            "type": "color",
+            "id": "bg_title_link",
+            "label": "Background Title Link",
+            "default": "#6e6e6e"
+          },
+          {
+            "type": "url",
+            "id": "cap_link",
+            "label": "Link button"
+          },
+          {
+            "type": "image_picker",
+            "id": "lookbook_image",
+            "label": "Image"
+          },
+          {
+            "type":  "header",
+            "content": "Design Option"
+          },
+          {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          },
+          {
+            "type":  "header",
+            "content": "Pin List"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 1"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_1",
+            "label": "Pin position 1",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_1",
+            "label": "Content position",
+            "options": [
+              {"value": "topleft", "label": "Top Left"},
+              {"value": "topright", "label": "Top Right"},
+              {"value": "bottomleft", "label": "Bottom Left"},
+              {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_1",
+            "label": "Select Pin Product 1"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 2"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_2",
+            "label": "Pin position 2",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_2",
+            "label": "Content position",
+            "options": [
+              {"value": "topleft", "label": "Top Left"},
+              {"value": "topright", "label": "Top Right"},
+              {"value": "bottomleft", "label": "Bottom Left"},
+              {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_2",
+            "label": "Select Pin Product 2"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 3"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_3",
+            "label": "Pin position 3",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_3",
+            "label": "Content position",
+            "options": [
+              {"value": "topleft", "label": "Top Left"},
+              {"value": "topright", "label": "Top Right"},
+              {"value": "bottomleft", "label": "Bottom Left"},
+              {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_3",
+            "label": "Select Pin Product 3"
+          },
+          {
+            "type":  "header",
+            "content": "Pin 4"
+          },
+          {
+            "type": "text",
+            "id": "pin_position_4",
+            "label": "Pin position 4",
+            "info": "Example: Top: 50%; Left: 20%",
+            "default": "Top: 50%; Left: 20%"
+          },
+          {
+            "type": "select",
+            "id": "pin_content_position_4",
+            "label": "Content position",
+            "options": [
+              {"value": "topleft", "label": "Top Left"},
+              {"value": "topright", "label": "Top Right"},
+              {"value": "bottomleft", "label": "Bottom Left"},
+              {"value": "bottomright", "label": "Bottom Right"}
+            ],
+            "default": "bottomleft"
+          },
+          {
+            "type": "product",
+            "id": "pin_product_4",
+            "label": "Select Pin Product 4"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vinova Lookbook",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "lookbook"
+          },
+          {
+            "type": "lookbook"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

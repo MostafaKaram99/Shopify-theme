@@ -1,0 +1,31 @@
+<div class="group-buttons">
+  {% assign variantCount = product.variants | size %}
+  {% if product.available %}
+    <form class="formAddToCart" action="/cart/add" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+      {% if variantCount > 1 %}
+        <a class="hover_x btn btnAddToCart btnChooseVariant" href="javascript:void(0);" data-url="/products/{{ product.handle }}?view=json"
+          {% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top" {% endif %} title="" tabindex="0">
+          <span>{{ 'products.product.select_options' | t }}</span>
+          <i class="zmdi zmdi-long-arrow-right"></i>
+        </a> 
+      {% else %}
+        <button class="hover_x btn btnAddToCart" type="submit" value="Submit" data-handle="{{ product.handle }}" data-pid="{{ product.variants.first.id }}"{% if settings.tooltip_enable %} data-toggle="tooltip" data-placement="top"{% endif %} title="" tabindex="0">
+          <span>{{ 'products.product.add_to_cart' | t }}</span>
+          <i class="zmdi zmdi-long-arrow-right"></i>
+        </button>
+      {% endif %}
+    </form>
+  {% else %}
+    <button class="btn btnsold_out sold_out d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#Form_newletter">
+      <span class="hover_x note align-items-center">
+        <span>
+          <i class="zmdi zmdi-email"></i>
+          <span>{{ "products.product.notify_me" | t }}</span>
+        </span>
+        <i class="zmdi zmdi-long-arrow-right"></i>
+      </span>
+      <span class="loading"><i class="fa fa-spin"></i></span>
+    </button>
+  {% endif %}
+</div>

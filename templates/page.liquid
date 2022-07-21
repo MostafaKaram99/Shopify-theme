@@ -1,0 +1,29 @@
+<div class="page-width">
+  {% include 'nov-breadcrumb' %}
+  <div class="nov__page mt-150 mt-xs-70">
+    <div class="container">
+      {% if page.content.size > 0 %}
+        <div class="rte">
+          {{ page.content }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<style>
+  #shopify-section-{{ section.id }} .distance {
+    padding-top: {{ section.settings.distance_top }};
+    padding-bottom: {{ section.settings.distance_bottom }};
+
+    {% if section.settings.background_color != blank or bg_image.src != blank %}
+      {% if section.settings.background_color != blank %}
+        background-color: {{ section.settings.background_color }};
+      {% endif %}
+      {% if bg_image.src != blank %}
+        background-image: url("{{ bg_image | img_url: '1920x' }}");
+        background-repeat: no-repeat;
+        background-position: center top;
+      {% endif %}
+    {% endif %}
+  }
+</style>

@@ -1,0 +1,178 @@
+{% if settings.type_sidebar == 'sidebar_left' %}
+  <div class="left_sidebar">
+{% elsif settings.type_sidebar == 'sidebar_right' %}
+  <div class="right_sidebar">
+{% elsif settings.type_sidebar == 'sidebar_widthout' %}
+  <div class="full_width">
+{% elsif settings.type_sidebar == 'sidebar_hidden' %}
+  <div class="no_sidebar">
+{% endif %}
+  {% include 'nov-breadcrumb' %}
+  <div class="page-width">
+    {% if settings.type_sidebar == 'sidebar_hidden' %}
+      <div class="sidebar sidebar-filter">
+        {% section 'nov-sidebar' %}
+      </div>
+    {% endif %}
+    <div class="container_90">
+      {% if settings.type_sidebar == 'sidebar_left' %}
+        <div class="collection_left">
+      {% elsif settings.type_sidebar == 'sidebar_right' %}
+        <div class="collection_right">
+      {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+        <div class="full_width">
+      {% elsif settings.type_sidebar == 'sidebar_hidden' %}
+        <div class="collection_hidden">
+      {% endif %}
+        {% if settings.type_sidebar != 'sidebar_widthout' %}
+          <div class="container_1320">
+        {% endif %}
+            {% if settings.type_sidebar == 'sidebar_left' %}
+              <div class="row">
+            {% elsif settings.type_sidebar == 'sidebar_right' %}
+              <div class="row flex-row-reverse">
+            {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+              <div class="row spacing-60">
+            {% elsif settings.type_sidebar == 'sidebar_hidden' %}
+              <div class="row">
+            {% endif %}
+                {% if settings.type_sidebar == 'sidebar_left' or settings.type_sidebar == 'sidebar_right' %}
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 order-md-0 order-sm-1 order-xs-1">
+                {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 order-md-0 order-sm-1 order-xs-1">
+                {% elsif settings.type_sidebar == 'sidebar_hidden' %}
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                {% endif %}
+                    {% if settings.type_sidebar == 'sidebar_hidden' %}
+                      <div class="sortPagiBar d-md-flex align-items-center d-sm-block d-xs-block">
+                        <div class="filter_button">
+                          <i class="zmdi zmdi-tune"></i>
+                          {{ 'collections.filters.button' | t }}
+                        </div>
+                        <div class="showing-total d-none d-md-block">
+                          {{ 'general.pagination.showing_total' | t: total: paginate.items }}
+                        </div> 
+                        <div class="filters-toolbar__item d-flex align-items-center">
+                          <div class="gridlist-toggle">
+                            <a href="#" id="grid-4" title="Grid View 4" data-type="view_4" class="active"><i class="zmdi zmdi-view-comfy"></i></a>
+                            <a href="#" id="grid-3" title="Grid View 3" data-type="view_3"><i class="zmdi zmdi-view-week"></i></a>
+                            <a href="#" id="grid-2" title="Grid View 2" data-type="view_2"><i class="zmdi zmdi-pause"></i></a>
+                            <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+                          </div>
+                          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" value="a" aria-expanded="true">
+                            {{ 'collections.sorting.title' | t }}
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right text-right">
+                            <div class="dropdown-item{% if sort_by == "best-selling" %} active{% endif %}" data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-ascending" %} active{% endif %}" data-value="title-ascending">{{ 'collections.sorting.az' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-descending" %} active{% endif %}" data-value="title-descending">{{ 'collections.sorting.za' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-ascending" %} active{% endif %}" data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-descending" %} active{% endif %}" data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-descending" %} active{% endif %}" data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-ascending" %} active{% endif %}" data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</div>
+                          </div>
+                          <input id="SortBy" class="collection-header__default-sort" type="hidden" value="{{ collection.default_sort_by }}">
+                        </div>
+                      </div>
+                    {% elsif settings.type_sidebar == 'sidebar_left' %}
+                      <div class="sortPagiBar d-md-flex align-items-center">
+                        <div class="filters-toolbar__item d-flex align-items-center">
+                          <div class="gridlist-toggle">
+                            <a href="#" id="grid-2" title="Grid View 2" data-type="view_2" class="active"><i class="zmdi zmdi-pause"></i></a>
+                            <a href="#" id="grid-3" title="Grid View 3" data-type="view_3"><i class="zmdi zmdi-view-week"></i></a>
+                            <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+                          </div>
+                          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" value="a" aria-expanded="true">
+                            {{ 'collections.sorting.title' | t }}
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right text-right">
+                            <div class="dropdown-item{% if sort_by == "best-selling" %} active{% endif %}" data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-ascending" %} active{% endif %}" data-value="title-ascending">{{ 'collections.sorting.az' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-descending" %} active{% endif %}" data-value="title-descending">{{ 'collections.sorting.za' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-ascending" %} active{% endif %}" data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-descending" %} active{% endif %}" data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-descending" %} active{% endif %}" data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-ascending" %} active{% endif %}" data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</div>
+                          </div>
+                          <input id="SortBy" class="collection-header__default-sort" type="hidden" value="{{ collection.default_sort_by }}">
+                        </div>
+                      </div>
+                    {% elsif settings.type_sidebar == 'sidebar_right' %}
+                      <div class="sortPagiBar d-md-flex align-items-center">
+                        <div class="filters-toolbar__item d-flex align-items-center">
+                          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" value="a" aria-expanded="true">
+                            {{ 'collections.sorting.title' | t }}
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right text-right">
+                            <div class="dropdown-item{% if sort_by == "best-selling" %} active{% endif %}" data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-ascending" %} active{% endif %}" data-value="title-ascending">{{ 'collections.sorting.az' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-descending" %} active{% endif %}" data-value="title-descending">{{ 'collections.sorting.za' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-ascending" %} active{% endif %}" data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-descending" %} active{% endif %}" data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-descending" %} active{% endif %}" data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-ascending" %} active{% endif %}" data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</div>
+                          </div>
+                          <input id="SortBy" class="collection-header__default-sort" type="hidden" value="{{ collection.default_sort_by }}">
+                          <div class="gridlist-toggle">
+                            <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+                            <a href="#" id="grid-3" title="Grid View 3" data-type="view_3"><i class="zmdi zmdi-view-week"></i></a>
+                            <a href="#" id="grid-2" title="Grid View 2" data-type="view_2" class="active"><i class="zmdi zmdi-pause"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+                      <div class="sortPagiBar d-flex align-items-center">
+                        <div class="filters-toolbar__item d-flex align-items-center">
+                          <div class="gridlist-toggle">
+                            <a href="#" id="grid-3" title="Grid View 3" data-type="view_3" class="active"><i class="zmdi zmdi-view-week"></i></a>
+                            <a href="#" id="grid-2" title="Grid View 2" data-type="view_2"><i class="zmdi zmdi-pause"></i></a>
+                            <a href="#" id="list" title="List View" data-type="list"><i class="zmdi zmdi-view-headline"></i></a>
+                          </div>
+                          {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" value="a" aria-expanded="true">
+                            {{ 'collections.sorting.title' | t }}
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right text-right">
+                            <div class="dropdown-item{% if sort_by == "best-selling" %} active{% endif %}" data-value="best-selling">{{ 'collections.sorting.best_selling' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-ascending" %} active{% endif %}" data-value="title-ascending">{{ 'collections.sorting.az' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "title-descending" %} active{% endif %}" data-value="title-descending">{{ 'collections.sorting.za' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-ascending" %} active{% endif %}" data-value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "price-descending" %} active{% endif %}" data-value="price-descending">{{ 'collections.sorting.price_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-descending" %} active{% endif %}" data-value="created-descending">{{ 'collections.sorting.date_descending' | t }}</div>
+                            <div class="dropdown-item{% if sort_by == "created-ascending" %} active{% endif %}" data-value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</div>
+                          </div>
+                          <input id="SortBy" class="collection-header__default-sort" type="hidden" value="{{ collection.default_sort_by }}">
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% if settings.type_sidebar == 'sidebar_left' or settings.type_sidebar == 'sidebar_right' %}
+                  <div class="sidebar sidebar-collection col-lg-3 col-md-4 order-md-0 order-sm-0 order-xs-0">
+                {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+                  <div class="sidebar sidebar-collection col-xl-2 col-lg-3 col-md-4 order-md-0 order-sm-0 order-xs-0">
+                {% elsif settings.type_sidebar == 'sidebar_hidden' %}
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                {% endif %}
+                    {% if settings.type_sidebar != 'sidebar_hidden' %}
+                      {% section 'nov-sidebar' %}
+                    {% else %}
+                    {% endif %}
+                  </div>
+                {% if settings.type_sidebar == 'sidebar_left' or settings.type_sidebar == 'sidebar_right' %}
+                  <div class="col-lg-9 col-md-8 order-md-0 order-sm-2 order-xs-2">
+                {% elsif settings.type_sidebar == 'sidebar_widthout' %}
+                  <div class="col-xl-10 col-lg-9 col-md-8 order-md-0 order-sm-2 order-xs-2">
+                {% elsif settings.type_sidebar == 'sidebar_hidden' %}
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                {% endif %}
+                    {% section 'collection-template' %}
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
